@@ -1,5 +1,5 @@
 import style from "./Register.module.css"
-import { useState, UseEffect } from "react"
+import { useState, UseEffect, useEffect } from "react"
 import { useAuthentication } from "../../hooks/useAuthentication"
 
 
@@ -33,6 +33,10 @@ const Register = () => {
     console.log(user)
   }
 
+  useEffect(() => {
+    if (authError) setError(authError)
+  }, [authError])
+
   return (
     <div className={style.register}>
       <h1>Cadastre-se para postar</h1>
@@ -55,7 +59,8 @@ const Register = () => {
           <span>Password:</span>
           <input type="password" name="comfirmPassword" required placeholder="Comfirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
         </label>
-        <button className="btn test">Confirm</button>
+        {!loading && <button className="btn test">Confirm</button>}
+        {loading && <button className="btn test" disabled>Aguarde</button>}
         {error && <p className="error">{error}</p>}
       </form>
     </div>

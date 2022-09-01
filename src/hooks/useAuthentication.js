@@ -1,3 +1,5 @@
+import { db } from "../firebase/config"
+
 import {
    getAuth,
    createUserWithEmailAndPassword,
@@ -26,6 +28,7 @@ export const useAuthentication = () => {
       checkIfIsCancelled()
 
       setLoading(true)
+      setError(null)
 
       try {
          const { user } = await createUserWithEmailAndPassword(
@@ -37,14 +40,23 @@ export const useAuthentication = () => {
          await updateProfile(user, {
             displayName: data.displayName
          })
+         setLoading(false)
 
          return user
       } catch (error) {
-         console.log(error.message)
-         console.log(typeof error.message)
-      }
 
-      setLoading(false)
+         let systemErrorMessage
+
+         if (error.message.includes('Password')) {
+            systemErrorMessage = 'The Password has to be at least 6 characters'
+         } else if (error.message.includes('email-alredy')) {
+            systemErrorMessage = 'This email is already in use'
+         } else {
+            systemErrorMessage = 'Something went wrong'
+         }
+         setLoading(false)
+         setError(systemErrorMessage)
+      }
    }
 
    useEffect(() => {
