@@ -46,7 +46,7 @@ input, textarea {
 }
 
 .btn {
-  background-color: #1a8918;
+  background-color: darkcyan;
   color: #fff;
   text-align: center;
   cursor: pointer;
@@ -72,7 +72,7 @@ input, textarea {
 }
 
 .btn:hover {
-  background-color: #0f730c;
+  background-color: mediumaquamarine;
   color: #fff;
 }
 

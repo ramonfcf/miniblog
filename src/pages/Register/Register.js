@@ -39,7 +39,7 @@ const Register = () => {
 
   return (
     <div className={style.register}>
-      <h1>Cadastre-se para postar</h1>
+      <h1>Sign in</h1>
       <p>Sign in and share your stories</p>
       <form onSubmit={handleSubmit}>
         <label>
