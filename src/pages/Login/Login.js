@@ -1,4 +1,4 @@
-import { useState, UseEffect, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useAuthentication } from "../../hooks/useAuthentication"
 import styles from './Login.module.css'
 
