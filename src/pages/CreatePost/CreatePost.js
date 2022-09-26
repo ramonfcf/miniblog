@@ -15,19 +15,39 @@ const CreatePost = () => {
 
    const { insertDocument, response } = useInsertDocument('posts')
 
+   const navigate = useNavigate()
+
    const handleSubmit = (e) => {
       e.preventDefault()
       setFormError('')
+
+      try {
+         new URL(image)
+      } catch (error) {
+         setFormError('Please enter a valid image URL')
+         return
+      }
+
+      const tagsArray = tags.split(/, | /).map(tag => tag.trim().toLowerCase())
+
+      if (!title || !image || !body || !tagsArray) {
+         setFormError('Please fill in all fields')
+         return
+      }
+
+
+      if (formError) return;
 
       insertDocument({
          title,
          image,
          body,
-         tags,
+         tagsArray,
          uid: user.uid,
          createdBy: user.displayName,
       })
 
+      navigate('/')
    }
 
    return (
@@ -74,13 +94,14 @@ const CreatePost = () => {
                   name="tags"
                   required
                   placeholder="Insert tags separated by comma"
-                  onChange={(e) => setTags(e.target.value.split(","))}
+                  onChange={(e) => setTags(e.target.value)}
                   value={tags}
                />
             </label>
             {!response.loading && <button className="btn test">Confirm</button>}
             {response.loading && <button className="btn test" disabled>Aguarde</button>}
             {response.error && <p className="error">{response.error}</p>}
+            {formError && <p className="error">{formError}</p>}
          </form>
       </div>
    )
