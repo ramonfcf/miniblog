@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { initializeFirestore } from "firebase/firestore";
 
 console.log("env vars", process.env.REACT_APP_TEST_VAR);
 
@@ -14,6 +14,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-const db = getFirestore(app, { experimentalForceLongPolling: true });
+const db = initializeFirestore(app, { experimentalForceLongPolling: true });
 
 export { db };
